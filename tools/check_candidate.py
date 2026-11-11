@@ -116,7 +116,7 @@ def main():
                 return super().write(value)
         stream = Tee()
         for label, directories in [('offline', [('tests/plugin', 'test_*.py')]),
-                                   ('native', [('tests/plugin', 'native_cases.py'), ('tests/integration/backend', 'native_backend.py'), ('tests/plugin', 'v2_cases.py'), ('tests/plugin', 'gateway_cases.py'), ('tests/plugin', 'admission_cases.py')])]:
+                                   ('native', [('tests/plugin', 'native_cases.py'), ('tests/integration/backend', 'native_backend.py'), ('tests/integration/backend', 'player_native.py'), ('tests/plugin', 'v2_cases.py'), ('tests/plugin', 'gateway_cases.py'), ('tests/plugin', 'admission_cases.py')])]:
             suite = unittest.TestSuite()
             for directory, pattern in directories:
                 suite.addTests(unittest.TestLoader().discover(str(tree / directory), pattern=pattern))

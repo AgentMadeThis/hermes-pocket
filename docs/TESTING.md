@@ -18,5 +18,8 @@ NormalGateway uses real GatewayRunner startup, normal plugin discovery,
 registered adapter creation/binding, real AIAgent conversation and send path,
 and real gateway stop. Only provider HTTP transport is synthetic. It does not
 prove a real model response, physical radio, firmware, USB or audio delivery.
+P2 tests include real ephemeral HTTP, Bridge expiry/restart/timeout framing,
+real HMAC IPC, durable catalog collision checks and selected-file next/previous.
+All fixture output remains in the disposable tree or external evidence.
 Other native tests label callback fixtures explicitly. Historical v1 reports
 are not evidence of current passes. Failed attempts are retained separately.

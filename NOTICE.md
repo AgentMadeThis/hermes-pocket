@@ -1,14 +1,13 @@
-# Attribution and licensing status
+# Attribution and licensing
 
 Preserved verified third-party notices: third-party-notices/NOTICE.md,
-meshcore-python-MIT.txt and hermes-agent-MIT.txt. MeshCore dispatcher adaptation
-notice applies to the selected Python safety adapter; do not remove it.
+meshcore-python-MIT.txt and hermes-agent-MIT.txt. The MeshCore dispatcher
+adaptation notice applies to the selected Python safety adapter.
 
-The owner explicitly confirmed MIT for our first-party Python plugin/host bridge
-contributions. LICENSE uses public nonpersonal project attribution: copyright
-2026 Hermes Pocket contributors. This does not relicense any third-party code. This candidate includes no WADAMESH GPL firmware source
-or binary. Firmware release/provenance obligations are a separate gate.
+LICENSE grants MIT for the first-party Python plugin and host bridge
+contributions, copyright 2026 Hermes Pocket contributors. Third-party rights
+are unchanged. This source package contains no firmware source or binary,
+vendor SDK distribution, or device image. Firmware licensing and corresponding
+source obligations are separate and are not satisfied by this Python package.
 
-V1_ORIGIN_MANIFEST.json records the exact reviewed 44-file input allowlist;
-SOURCE_ORIGINS.json preserves original selected source provenance. V2 deltas
-are separately hashed by V2_SOURCE_MANIFEST.json after qualification.
+PUBLIC_SOURCE_ALLOWLIST.json identifies the exact distributed source files.

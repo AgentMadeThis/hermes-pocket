@@ -30,6 +30,10 @@ gateway:
         socket_dir: /absolute/private/owned/state
         owners: [ENROLLED_64_LOWERCASE_HEX_OWNER]
         home_music: false
+        # Optional P2 music setup; existing private local API required:
+        home_music_port: 8899
+        home_library_root: /srv/pocket/music
+        home_source: lounge
 ```
 
 No other enabled platform, routing or multiplexer is supported. Configure the

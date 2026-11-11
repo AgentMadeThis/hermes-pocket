@@ -11,16 +11,16 @@
       "sha256": "eeafa3a72fc273703e220f4ba16c8591ddcc0b618d14c453e9f46f30c9840f67"
     },
     "NOTICE.md": {
-      "sha256": "1d71034ce8d06aee102d33717e65f7e356b4fd3bb9177b12dd8c2f5728cb58e0"
+      "sha256": "a549d8187977dc5e81be3e1d07fdc57594f09a918a4d19d3223eacac52e781ee"
     },
     "README.md": {
-      "sha256": "9d45922c0861bd5e4b9fed3ba27cd3a81f555a65c201a3d4800fa15cb40d7253"
+      "sha256": "d61922a17f367009696a100067877dc4c9b48d1db3554e0a2303032844d49e84"
     },
     "SECURITY.md": {
       "sha256": "63babbcea4f071b368c599ac06041bbfceeec071ae4e69d7eb56b63f41cb967a"
     },
     "catalog/PR_BODY.md": {
-      "sha256": "bb631d8da2e85e7244604b65451eb5519c43a3bde353ca6dba98a84da141435f"
+      "sha256": "bc1039ee20863b8bb7874af54f1040055e84bd87468e8444978f4ec3399475f6"
     },
     "catalog/pocket-platform.yaml.TEMPLATE": {
       "sha256": "acecd3ae76599d51ec8a00ccd9797071fb0af7a4c78968bf3188757ddafde4fe"
@@ -34,14 +34,20 @@
     "docs/DEPENDENCIES.md": {
       "sha256": "7a40f928c574af887aba7ec51c84dff51bd498f0799b73939d1514a97ddd588d"
     },
+    "docs/HARDWARE_BOUNDARY.md": {
+      "sha256": "d2081990bf4ae2a09d828205c5c02943b7aa96dccc4722328da563c0c5360474"
+    },
     "docs/INSTALL.md": {
-      "sha256": "356b43e700a058b054feef7bfba911518bb24070a20af7290f9199bbc9289bae"
+      "sha256": "c2a0491479ff9c9e46a880069291aff816388a27836e3b58ce12f20154470298"
     },
     "docs/LIMITATIONS.md": {
-      "sha256": "e76e1587fe0ca4aef18dc987fcc652c1a16cebaafbf53fa04acda1db8a62a4f4"
+      "sha256": "f38fc164872af867c7f89a592297d928a87216eb1aec72cad402b922245e98f0"
+    },
+    "docs/PLAYER.md": {
+      "sha256": "7570a839b312d8bb52d678c1629d184dfa6d3af71a830b1a38c67bb830aa8cd9"
     },
     "docs/TESTING.md": {
-      "sha256": "2518b38d7709444fc0edf13470991f294ba19187b81737937767872005282387"
+      "sha256": "45af366328024c178870b609adb73dc3cf6005d37ed81741dceb9e6a4a4c8c93"
     },
     "integration/host/bridge/__init__.py": {
       "sha256": "4a8e0eb57a9253088752e559d1916e468f52fd2105058a83c30fd4f4417a27eb"
@@ -50,7 +56,7 @@
       "sha256": "29cf9e1fd7a116025e4f5e75bc597a9293302550661c0a9f5d62e3cc4a74f273"
     },
     "integration/host/bridge/core.py": {
-      "sha256": "c38b178797c03a9a19bc73a56432e368ec4bac698cc3d89dc9a46ffae9144123"
+      "sha256": "67399fcf617bb814d8e086aaec58a71b6b508c4063a6b021f6cf61b0af3a1aaa"
     },
     "integration/host/bridge/meshcore_source.py": {
       "sha256": "86aafee7bd026ecefc1c3743ae549b63ab04f5e9d94c06dc92175dcb5b88f2a2"
@@ -71,10 +77,10 @@
       "sha256": "e4d6d65893aacaba7b7f5ad2ebdb333d5d9c19dcc97a7d440b1d13ced25bae49"
     },
     "plugin/adapter.py": {
-      "sha256": "3f8c45c0b209ecadb0a4b66ed84b2dd41846479180949ec1a4b702ea57699a7f"
+      "sha256": "97af93e05c650fb0f5a279016b6db48e6313a644e8ab351191a4b14299b133d7"
     },
     "plugin/client.py": {
-      "sha256": "f6dc459e843e00c60cab6e48aa855b5fccd268802415df201183af754e1fb7eb"
+      "sha256": "c8b41e75aec0bbec74d666ebf6a3a5b7b63b13c11455572cd3a7adb5ca8df09d"
     },
     "plugin/ipc.py": {
       "sha256": "08e6d03f5e7ef9e153a6373d5c3a55eb90e1116c001420ced9a5fae4e24c321a"
@@ -84,6 +90,12 @@
     },
     "plugin/music.py": {
       "sha256": "ec5f01551041a2fcf08441fccedd6035acff1b0fbfdc7bb539b45b1d14b650c3"
+    },
+    "plugin/player.py": {
+      "sha256": "e6ed7cbb02c83095d585418b913209e29a89233c51bd26ae99e393ee58249ce4"
+    },
+    "plugin/player_wire.py": {
+      "sha256": "d6e53f72c98ab9ebdc6f5c77dbb8d3553d85a51ac4c8c53bff0d37d156d92bc6"
     },
     "plugin/plugin.yaml": {
       "sha256": "62a47f71906df0aca02088e1bb248534b7f303f3f1a32f74723759ee16d397ad"
@@ -101,7 +113,13 @@
       "sha256": "7947ce70a9b03f6100c31ae32fa99f14b3219317e158e060182ec53237f05b18"
     },
     "tests/integration/backend/native_backend.py": {
-      "sha256": "5620d21af07bcd0e51d6f4654f9a4ab079fb5f95366448b334c5edf5485d53a0"
+      "sha256": "837f7f062918ef13e522c6696cf588e6e9925a4311858a0179cadcf01922078e"
+    },
+    "tests/integration/backend/player-golden.json": {
+      "sha256": "d760ac9f2b0cc9216ba6d4836279bb8ea24ed9b0dfe4a493d37e14106e99b4c4"
+    },
+    "tests/integration/backend/player_native.py": {
+      "sha256": "4c4ab3fc644b6df7a6be52668131f20fc76eaff578e71efcd3bc147ad22c4a95"
     },
     "tests/plugin/admission_cases.py": {
       "sha256": "40e38da80261d92a971f1995ce6b80876025d0dfa524ca3094d3dc65e62dfe53"
@@ -124,6 +142,12 @@
     "tests/plugin/test_output_controls.py": {
       "sha256": "4f6a725bdb80d220f07138ec3d5abb8399f8344beb91f51b48c6db139142b5e6"
     },
+    "tests/plugin/test_player.py": {
+      "sha256": "5144cd91cd60a7b50570e8ddd4bdb7271d0c38800013c87474ec456b1f7e3cf9"
+    },
+    "tests/plugin/test_player_bridge_closure.py": {
+      "sha256": "fe2f44586422325eb320e6df19e8c102a47acdcc36ecb3bddb6e2db8bd0cf94c"
+    },
     "tests/plugin/test_release.py": {
       "sha256": "65e34235df6fb3b2ef5c63e627cdb048423201d4caa297b1b417faa2bd9fc73c"
     },
@@ -140,7 +164,7 @@
       "sha256": "a3adbe2564ff0be66a12dcdbd4697f3cfb4faf4a554fc2839a08e2fd8fdb7a32"
     },
     "tools/check_candidate.py": {
-      "sha256": "1abd91c6a8ea96b28e3a76b25cdd9c5ba1d57d780085d284b8ce5a23ee84c0d1"
+      "sha256": "1794e7e777f41edcf9c2a089f6497dc9a0d9ac7387a04400e06f6c87bc7e8dcd"
     },
     "tools/qualify.py": {
       "sha256": "29e073e0adcfdb46bba4e129b06d8f0ddcb318cb292064a583376f446a466177"

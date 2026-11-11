@@ -18,12 +18,19 @@ import time
 from typing import Protocol
 
 from plugin.wire import PocketOutcome, correlation, reply
+from plugin import player_wire
 
 from .tracking import SCHEMA as TRACKING_SCHEMA, parse_position, reserved_position, store_position
 
 NATIVE_TEXT_BYTES = 160  # MeshCore BaseChatMesh.h: 10 * CIPHER_BLOCK_SIZE
 MAX_PARTS = 4
 MAX_INPUT_BYTES = 160
+
+
+def player_failure(text, kind, message, budget, fallback):
+    """Additive P2 error framing; leave all legacy response bytes untouched."""
+    cid = player_wire.correlation(text) if text.startswith('P2') else None
+    return player_wire.failure(cid, kind, message, budget) if cid else fallback
 
 
 def full_key(value: str) -> str:
@@ -138,6 +145,7 @@ class Bridge:
             cid = correlation(interrupted['text']) if interrupted['text'].startswith('P1') else None
             response = (reply(cid, 'u', 'Interrupted; no automatic retry.', payload_budget) if cid else
                         'Unknown: execution interrupted; no automatic retry.')
+            response = player_failure(interrupted['text'], 'u', 'Interrupted; no automatic retry.', payload_budget, response)
             self.db.execute("UPDATE requests SET state='Unknown',response=? WHERE id=?", (response, interrupted['id']))
         self.db.execute("UPDATE requests SET delivery='Unknown' WHERE delivery='Sending'")
         self.query = query or DisabledQuery()
@@ -223,11 +231,21 @@ class Bridge:
             if self.now() - row['timestamp'] > self.ttl:
                 cid = correlation(row['text']) if row['text'].startswith('P1') else None
                 response = reply(cid, 'e', 'Request expired; not started.', self.payload_budget) if cid else 'Request expired; not started.'
+                response = player_failure(row['text'], 'e', 'Request expired; not started.', self.payload_budget, response)
                 self.db.execute("UPDATE requests SET state='Expired',response=? WHERE id=?", (response, identity))
                 return identity
             self.db.execute("UPDATE requests SET state='Running' WHERE id=?", (identity,))
             text = row['text']
             try:
+                if text.startswith('P2'):
+                    try:
+                        player_wire.decode(text)
+                    except (ValueError, UnicodeError):
+                        raise PocketOutcome('Unavailable', player_failure(text, 'e', 'MALFORMED_P2', self.payload_budget, 'Unavailable: MALFORMED_P2')) from None
+                    if not callable(getattr(self.query, 'query_event', None)):
+                        raise PocketOutcome('Unavailable', player_failure(text, 'e', 'PLAYER_NATIVE_IPC_REQUIRED', self.payload_budget, 'Unavailable: PLAYER_NATIVE_IPC_REQUIRED'))
+                if text.startswith('R2'):
+                    raise PocketOutcome('Unavailable', 'Unavailable: RESERVED_R2_INPUT')
                 if callable(getattr(self.query, 'query_event', None)):
                     # Admission/authentication and Running journaling already occurred.
                     # Preserve the exact original envelope identity and payload budget.
@@ -267,7 +285,10 @@ class Bridge:
             except PocketOutcome as exc:
                 self.db.execute("UPDATE requests SET state=?,response=? WHERE id=?", (exc.state, exc.text, identity))
             except QueryUnavailable as exc:
-                if callable(getattr(self.query, 'query_event', None)):
+                if text.startswith('P2'):
+                    refusal = player_failure(text, 'e', 'NATIVE_OPERATION_UNAVAILABLE', self.payload_budget, 'Unavailable: NATIVE_OPERATION_UNAVAILABLE')
+                    self.db.execute("UPDATE requests SET state='Unavailable',response=? WHERE id=?", (refusal, identity))
+                elif callable(getattr(self.query, 'query_event', None)):
                     # Typed, sanitized semantic refusal; do not call it a model failure.
                     refusal = 'Unavailable: ' + getattr(exc, 'pocket_code', 'NATIVE_OPERATION_UNAVAILABLE')
                     self.db.execute("UPDATE requests SET state='Unavailable',response=? WHERE id=?", (refusal, identity))
@@ -276,12 +297,14 @@ class Bridge:
             except asyncio.CancelledError:
                 cid = correlation(text) if text.startswith('P1') else None
                 response = reply(cid, 'u', 'Interrupted; no automatic retry.', self.payload_budget) if cid else 'Unknown: execution interrupted; no automatic retry.'
+                response = player_failure(text, 'u', 'Interrupted; no automatic retry.', self.payload_budget, response)
                 self.db.execute("UPDATE requests SET state='Unknown',response=? WHERE id=?", (response, identity))
                 raise
             except Exception:
                 # No exception strings: these can contain provider tokens or prompt text.
                 cid = correlation(text) if text.startswith('P1') else None
                 response = reply(cid, 'u', 'Outcome unknown; no automatic retry.', self.payload_budget) if cid else 'Unknown: outcome unknown; no automatic retry.'
+                response = player_failure(text, 'u', 'Outcome unknown; no automatic retry.', self.payload_budget, response)
                 self.db.execute("UPDATE requests SET state='Unknown',response=? WHERE id=?", (response, identity))
             return identity
 

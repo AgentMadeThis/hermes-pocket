@@ -97,13 +97,13 @@ class Backend(unittest.IsolatedAsyncioTestCase):
         with closing(sqlite3.connect(path)) as db:
             db.executescript(SCHEMA)
             db.execute('INSERT INTO positions VALUES(?,?,?,?,?,?,?,?,?,?,?,?)',
-                (OWNER, '00000001', 1, 'b' * 64, 1000, 999, 2000, 12345678, 23456789, 10, 7, 1))
+                (OWNER, '00000001', 1, 'b' * 64, 1000, 999, 2000, 0, 0, 10, 7, 1))
             db.commit()
         self.adapter.location = SQLiteSnapshotReader(path, now=lambda: 1005)
         for text in ['/location', 'P1|00000018|l|']:
             result = await self.client.request(event(text))
             self.assertEqual(result['state'], 'Observed')
-            self.assertIn('12.345678,23.456789', result['text'])
+            self.assertIn('0.000000,0.000000', result['text'])
             self.assertIn('rx 5s ago; fix age 7s', result['text'])
         self.adapter.location = SQLiteSnapshotReader(path, now=lambda: 1100)
         result = await self.client.request(event('P1|00000019|l|'))

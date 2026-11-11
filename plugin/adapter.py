@@ -10,7 +10,9 @@ from gateway.config import Platform
 from gateway.platforms.base import BasePlatformAdapter, SendResult
 from gateway.platforms.event import MessageEvent
 from .ipc import IPCServer
-from .music import MusicHTTP, ACTIONS
+from .music import MusicHTTP, ACTIONS, APPROVED_SOURCES
+from .player import PlayerHTTP
+from . import player_wire
 from .location import SQLiteSnapshotReader
 from .wire import decode, correlation, reply, music_payload, truncate
 from .protocol import Journal, bounded_text, full_key, validate_event
@@ -25,7 +27,7 @@ class PocketAdapter(BasePlatformAdapter):
     def __init__(self, config, *, policy=None):
         super().__init__(config, Platform('pocket'))
         extra = config.extra
-        allowed = {'socket_dir', 'owners', 'timeout', 'home_music', 'home_source', 'home_volume_supported', 'gps_snapshot', 'group_sessions_per_user', 'thread_sessions_per_user'}
+        allowed = {'socket_dir', 'owners', 'timeout', 'home_music', 'home_source', 'home_volume_supported', 'gps_snapshot', 'group_sessions_per_user', 'thread_sessions_per_user', 'home_library_root', 'home_music_port'}
         if not isinstance(extra, dict) or set(extra) - allowed:
             raise ValueError('invalid Pocket configuration')
         for native_flag in ('group_sessions_per_user', 'thread_sessions_per_user'):
@@ -46,7 +48,14 @@ class PocketAdapter(BasePlatformAdapter):
         volume_supported = extra.get('home_volume_supported', True)
         if type(volume_supported) is not bool:
             raise ValueError('explicit volume support boolean required')
-        self.music = MusicHTTP(source=extra.get('home_source'), volume_supported=volume_supported)
+        port = extra.get('home_music_port', 8899)
+        root = Path(extra.get('home_library_root', '/srv/pocket/music'))
+        if type(port) is not int or not 1 <= port <= 65535 or not root.is_absolute() or '..' in root.parts:
+            raise ValueError('absolute trusted music root and local TCP port required')
+        self.music = MusicHTTP(port=port, source=extra.get('home_source'), volume_supported=volume_supported)
+        self.player = PlayerHTTP(port=port, source=extra.get('home_source'),
+            roots={s: root / s for s in APPROVED_SOURCES},
+            playlists={s: root / ('all_sets.m3u' if s == 'all' else s + '.m3u') for s in APPROVED_SOURCES})
         self.location = SQLiteSnapshotReader(extra['gps_snapshot']) if extra.get('gps_snapshot') else None
         self.journal = self.ipc = None
         self.pending = {}
@@ -154,6 +163,9 @@ class PocketAdapter(BasePlatformAdapter):
                 cid = correlation(event['text']) if event['text'].startswith('P1') else None
                 if cid:
                     response['text'] = reply(cid, 'u', 'Outcome unknown; no automatic retry.', event['budget'])
+                p2cid = player_wire.correlation(event['text']) if event['text'].startswith('P2') else None
+                if p2cid:
+                    response['text'] = player_wire.failure(p2cid, 'u', 'Outcome unknown; no automatic retry.', event['budget'])
                 return response
             finally:
                 pending = self.pending.pop(request_id, None)
@@ -163,6 +175,23 @@ class PocketAdapter(BasePlatformAdapter):
     async def _dispatch(self, event):
         # Event validation and durable outer claim MUST precede this decode.
         text = event['text']
+        if text.startswith('P2'):
+            cid = player_wire.correlation(text)
+            try:
+                request = player_wire.decode(text)
+            except (ValueError, UnicodeError):
+                result = {'state': 'Rejected', 'code': 'MALFORMED_P2'}
+            else:
+                if self.home_music:
+                    self.player.bind_journal(self.journal)
+                    return await self.player.perform(event['sender'], request, event['budget'])
+                result = {'state': 'Unavailable', 'code': 'HOME_MUSIC_NOT_ENABLED'}
+            if cid:
+                result['text'] = player_wire.failure(cid, 'e', result['code'], event['budget'])
+            return result
+        # Reserved response families cannot become model input.
+        if text.startswith('R2'):
+            return {'state': 'Rejected', 'code': 'RESERVED_R2_INPUT'}
         if not text.startswith('P1'):
             return await self._perform(event, text)
         cid = correlation(text)
@@ -174,7 +203,9 @@ class PocketAdapter(BasePlatformAdapter):
             if request.action in {'c', 'n'}:
                 if request.action == 'c':
                     # Chat cannot smuggle a P1 command envelope into the model.
-                    if request.text.startswith('P1'):
+                    if request.text.startswith(('P2', 'R2')):
+                        result = {'state': 'Rejected', 'code': 'NESTED_P2_NOT_ALLOWED'}
+                    elif request.text.startswith('P1'):
                         result = {'state': 'Rejected', 'code': 'NESTED_P1_NOT_ALLOWED'}
                     else:
                         result = await self._perform(event, request.text)
