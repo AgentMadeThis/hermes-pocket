@@ -1,0 +1,44 @@
+name: Source checks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout reviewed source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Check clean exported source
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PYTHONDONTWRITEBYTECODE=1
+          export TMPDIR="$RUNNER_TEMP"
+          snapshot=$(mktemp -d "$RUNNER_TEMP/pocket-XXXXXX")
+          trap 'rm -rf "$snapshot"' EXIT
+          git archive HEAD | tar -x -C "$snapshot"
+          cd "$snapshot"
+          python3 -B - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          root = Path('.')
+          manifest = json.loads((root / 'PUBLIC_SOURCE_ALLOWLIST.json').read_text())
+          expected = set(manifest['files']) | {'PUBLIC_SOURCE_ALLOWLIST.json'}
+          actual = {p.as_posix() for p in root.rglob('*') if p.is_file()}
+          assert actual == expected, (actual - expected, expected - actual)
+          for relative, spec in manifest['files'].items():
+              path = root / relative
+              assert not path.is_symlink(), relative
+              assert hashlib.sha256(path.read_bytes()).hexdigest() == spec['sha256'], relative
+              path.read_bytes().decode('utf-8')
+          print('Verified public source membership and SHA-256:', len(expected), 'files')
+          PY
+          python3 -B -m unittest discover -s tests/plugin -p 'test_*.py' -v
+# Offline/package tests only. Native Hermes, model and physical radio
+# qualification are separate and are not claimed by this workflow.

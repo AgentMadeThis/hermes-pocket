@@ -1,0 +1,10 @@
+{
+  "state": "<ABSOLUTE_SEPARATE_PRIVATE_BRIDGE_STATE_DIRECTORY>",
+  "root_device": "<OPERATOR_VERIFIED_STABLE_SERIAL_BY_ID_TARGET>",
+  "root_key": "<ENROLLED_ROOT_FULL_PUBLIC_KEY>",
+  "owner_key": "<ENROLLED_OWNER_FULL_PUBLIC_KEY>",
+  "security_profile": "HP2-AUTH1",
+  "payload_budget": 91,
+  "pocket_ipc_dir": "<SAME_PRIVATE_POCKET_IPC_DIRECTORY>",
+  "secret_provisioning": "OPERATOR_MUST_EXPLICITLY_PASS_32_KEY_BYTES_TO_BridgeEventQuery_NOT_A_HERMES_FILE"
+}

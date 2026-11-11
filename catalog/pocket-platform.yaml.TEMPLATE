@@ -1,0 +1,22 @@
+# NOT SUBMITTABLE. Resolve README blockers and replace placeholders explicitly.
+name: pocket-platform
+repo: "<PUBLIC_HTTPS_CLONEABLE_REPOSITORY_URL>"
+sha: "<EXACT_REVIEWED_40_LOWERCASE_HEX_COMMIT_SHA>"
+subdir: plugin
+description: "Authenticated radio companion bridge for native Hermes sessions, notes and opt-in HOME commands."
+maintainer: "<APPROVED_PUBLIC_MAINTAINER_LOGIN>"
+tier: community
+category: platform
+requires_hermes: ">=0.22.5"
+version: "0.2.0"
+platforms: [linux]
+title: "Hermes Pocket"
+readme: true
+capabilities:
+  provides_tools: []
+  provides_hooks: [pre_tool_call]
+  provides_middleware: []
+  requires_env: [POCKET_HMAC_KEY]
+known_issues:
+  - "BLOCKED: independent exact-source/consumer review pending."
+  - "Hardware/firmware and clean consumer installation are separately qualified prerequisites."

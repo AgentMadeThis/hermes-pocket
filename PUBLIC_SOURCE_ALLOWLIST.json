@@ -1,0 +1,149 @@
+{
+  "format": "public source only; manifest itself additionally allowed",
+  "files": {
+    ".github/workflows/source-checks.yml": {
+      "sha256": "d26f2a42a41b4d0115040cd534f57bc57e0ff21a4dd7998f57d5918f1cd77f17"
+    },
+    ".gitignore": {
+      "sha256": "e687b31b6b7669cc0c8d9c8176aa4e49135714a6af9b7b056aafccfdbe61b316"
+    },
+    "LICENSE": {
+      "sha256": "eeafa3a72fc273703e220f4ba16c8591ddcc0b618d14c453e9f46f30c9840f67"
+    },
+    "NOTICE.md": {
+      "sha256": "1d71034ce8d06aee102d33717e65f7e356b4fd3bb9177b12dd8c2f5728cb58e0"
+    },
+    "README.md": {
+      "sha256": "9d45922c0861bd5e4b9fed3ba27cd3a81f555a65c201a3d4800fa15cb40d7253"
+    },
+    "SECURITY.md": {
+      "sha256": "63babbcea4f071b368c599ac06041bbfceeec071ae4e69d7eb56b63f41cb967a"
+    },
+    "catalog/PR_BODY.md": {
+      "sha256": "bb631d8da2e85e7244604b65451eb5519c43a3bde353ca6dba98a84da141435f"
+    },
+    "catalog/pocket-platform.yaml.TEMPLATE": {
+      "sha256": "acecd3ae76599d51ec8a00ccd9797071fb0af7a4c78968bf3188757ddafde4fe"
+    },
+    "config/bridge.json.example": {
+      "sha256": "07e679c2f542a3dc159190a4ca3c8a6a9799eba8ca7c2c8b4eb2e9973befb216"
+    },
+    "config/pocket.extra.json.example": {
+      "sha256": "c3352d425b516ca1394391e2d4a6e38131af504046afd489d68c3b6f9f9f9be4"
+    },
+    "docs/DEPENDENCIES.md": {
+      "sha256": "7a40f928c574af887aba7ec51c84dff51bd498f0799b73939d1514a97ddd588d"
+    },
+    "docs/INSTALL.md": {
+      "sha256": "356b43e700a058b054feef7bfba911518bb24070a20af7290f9199bbc9289bae"
+    },
+    "docs/LIMITATIONS.md": {
+      "sha256": "e76e1587fe0ca4aef18dc987fcc652c1a16cebaafbf53fa04acda1db8a62a4f4"
+    },
+    "docs/TESTING.md": {
+      "sha256": "2518b38d7709444fc0edf13470991f294ba19187b81737937767872005282387"
+    },
+    "integration/host/bridge/__init__.py": {
+      "sha256": "4a8e0eb57a9253088752e559d1916e468f52fd2105058a83c30fd4f4417a27eb"
+    },
+    "integration/host/bridge/contact_inventory.py": {
+      "sha256": "29cf9e1fd7a116025e4f5e75bc597a9293302550661c0a9f5d62e3cc4a74f273"
+    },
+    "integration/host/bridge/core.py": {
+      "sha256": "c38b178797c03a9a19bc73a56432e368ec4bac698cc3d89dc9a46ffae9144123"
+    },
+    "integration/host/bridge/meshcore_source.py": {
+      "sha256": "86aafee7bd026ecefc1c3743ae549b63ab04f5e9d94c06dc92175dcb5b88f2a2"
+    },
+    "integration/host/bridge/sdk_safety.py": {
+      "sha256": "d3db94ef340b80bd48e41426912cc51ecb0da8173931aad6eacafb60e7e93e55"
+    },
+    "integration/host/bridge/serial_safety.py": {
+      "sha256": "b7f331a4cb4b8fb2757f638bf0eb38493c2205a083c3399c03f3c836e8d83377"
+    },
+    "integration/host/bridge/tracking.py": {
+      "sha256": "af97735ad245f5ab8a2b72d4c9b283e81013363007052de27e92bcfc48726398"
+    },
+    "plugin/README.md": {
+      "sha256": "0459bc1ee3d9be0bdcf378186621a460eca428c38894b25ea6217eecf2a6b66f"
+    },
+    "plugin/__init__.py": {
+      "sha256": "e4d6d65893aacaba7b7f5ad2ebdb333d5d9c19dcc97a7d440b1d13ced25bae49"
+    },
+    "plugin/adapter.py": {
+      "sha256": "3f8c45c0b209ecadb0a4b66ed84b2dd41846479180949ec1a4b702ea57699a7f"
+    },
+    "plugin/client.py": {
+      "sha256": "f6dc459e843e00c60cab6e48aa855b5fccd268802415df201183af754e1fb7eb"
+    },
+    "plugin/ipc.py": {
+      "sha256": "08e6d03f5e7ef9e153a6373d5c3a55eb90e1116c001420ced9a5fae4e24c321a"
+    },
+    "plugin/location.py": {
+      "sha256": "be1579c56e123f768c3b5db06d69d333eb052a89c6db8560c4d9aa610221f6b8"
+    },
+    "plugin/music.py": {
+      "sha256": "ec5f01551041a2fcf08441fccedd6035acff1b0fbfdc7bb539b45b1d14b650c3"
+    },
+    "plugin/plugin.yaml": {
+      "sha256": "62a47f71906df0aca02088e1bb248534b7f303f3f1a32f74723759ee16d397ad"
+    },
+    "plugin/policy.py": {
+      "sha256": "abaead99caa8a092ab4729846d1adea4706efeedc3efe44af23e55ca7e61c043"
+    },
+    "plugin/protocol.py": {
+      "sha256": "abf8505bdc8f9bfd8bb61c136b6171a5e5b74bf639fcfa6b41126c35dc6b883e"
+    },
+    "plugin/wire.py": {
+      "sha256": "1b5ea313195ac1ef0ce22bde2be230b39461e55feb38b6817e2f5cf237d58ab4"
+    },
+    "tests/integration/backend/golden.json": {
+      "sha256": "7947ce70a9b03f6100c31ae32fa99f14b3219317e158e060182ec53237f05b18"
+    },
+    "tests/integration/backend/native_backend.py": {
+      "sha256": "5620d21af07bcd0e51d6f4654f9a4ab079fb5f95366448b334c5edf5485d53a0"
+    },
+    "tests/plugin/admission_cases.py": {
+      "sha256": "40e38da80261d92a971f1995ce6b80876025d0dfa524ca3094d3dc65e62dfe53"
+    },
+    "tests/plugin/gateway_cases.py": {
+      "sha256": "db611a39331c0379fd96397c44d61b14f9ff087c2f5c8ac02d1409db90454c34"
+    },
+    "tests/plugin/native_cases.py": {
+      "sha256": "078c92581b9093c789ba81dc22d541506fc853e1c1d5726b3cbd8c65ee096f3e"
+    },
+    "tests/plugin/test_contract.py": {
+      "sha256": "af7ef3f8ea5eefa26a021f2dc6fe3f7816273edf45062c11a903d3b4f5606ef7"
+    },
+    "tests/plugin/test_integrated.py": {
+      "sha256": "3868f9cebd99efff8d353ab1e90b0dd5a036deb233d7406b79eb704fefc379ec"
+    },
+    "tests/plugin/test_ipc.py": {
+      "sha256": "7fda99f88784b6d1d8da0f5fd810e0bffc5f677198d017e2a643336844aef1e8"
+    },
+    "tests/plugin/test_output_controls.py": {
+      "sha256": "4f6a725bdb80d220f07138ec3d5abb8399f8344beb91f51b48c6db139142b5e6"
+    },
+    "tests/plugin/test_release.py": {
+      "sha256": "65e34235df6fb3b2ef5c63e627cdb048423201d4caa297b1b417faa2bd9fc73c"
+    },
+    "tests/plugin/v2_cases.py": {
+      "sha256": "a2a61d8363e352546004098156c0e8bdbfaf7b31068ee3a59403ce403481c7d1"
+    },
+    "third-party-notices/NOTICE.md": {
+      "sha256": "35720e0e2b0b44d5fe14552c32414dc9c089a8068545f5ea44d824eb0ee3a737"
+    },
+    "third-party-notices/hermes-agent-MIT.txt": {
+      "sha256": "821556e6336796450ab852d375117b48a4887e71d255794fd6318d99982a5ab6"
+    },
+    "third-party-notices/meshcore-python-MIT.txt": {
+      "sha256": "a3adbe2564ff0be66a12dcdbd4697f3cfb4faf4a554fc2839a08e2fd8fdb7a32"
+    },
+    "tools/check_candidate.py": {
+      "sha256": "1abd91c6a8ea96b28e3a76b25cdd9c5ba1d57d780085d284b8ce5a23ee84c0d1"
+    },
+    "tools/qualify.py": {
+      "sha256": "29e073e0adcfdb46bba4e129b06d8f0ddcb318cb292064a583376f446a466177"
+    }
+  }
+}

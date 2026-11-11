@@ -1,0 +1,16 @@
+name: pocket-platform
+label: Hermes Pocket
+kind: platform
+license: MIT
+version: "0.2.0"
+# Conservative tested baseline, not a claim that earlier releases are compatible.
+requires_hermes: ">=0.22.5"
+provides_tools: []
+provides_hooks: [pre_tool_call]
+provides_middleware: []
+requires_env:
+  - name: POCKET_HMAC_KEY
+    description: Exactly 32 random bytes encoded as 64 lowercase hex characters
+    password: true
+description: Authenticated local Pocket radio bridge to native Hermes sessions.
+author: Hermes Pocket contributors
